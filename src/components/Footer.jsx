@@ -87,7 +87,7 @@ const Footer = () => {
             &copy; {currentYear} GymWala. All rights reserved.
             <p>
               Made with ❤️ by{" "}
-              <a href="https://codesrahul.vercel.app">
+              <a href="https://codesrahul.xyz">
                 {" "}
                 <span className="text-yellow-300 animate-pulse">Codes</span>
                 <span className="text-white">Rahul</span>
