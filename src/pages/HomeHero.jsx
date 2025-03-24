@@ -288,7 +288,7 @@ const HomeHero = () => {
               </button>
             </form>
             <p className="text-center text-yellow-300 mt-4 font-semibold">
-              Get 1 Day Free Trial
+              Get 1 Day Free Trial Now!
             </p>
           </div>
           <div className="w-full md:w-1/2">
