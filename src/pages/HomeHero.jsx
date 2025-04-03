@@ -196,7 +196,7 @@ const HomeHero = () => {
               icon: <FaHeartbeat className="text-yellow-300 text-3xl mb-2" />,
             },
           ].map((achievement) => (
-            <div key={achievement.label} className="flex flex-col items-center hover:scale-105 transition-all duration-300 ease-out">
+            <div key={achievement.label} className="flex flex-col items-center hover:scale-105 transition-all duration-300 ease-out inset-0 bg-gray-900 bg-opacity-60 p-5 rounded-full">
               {achievement.icon}
               <span className="text-4xl font-bold text-yellow-300">
                 {achievement.number}
