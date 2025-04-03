@@ -82,7 +82,8 @@ const HomeHero = () => {
         <div className="absolute inset-0 bg-gray-900 bg-opacity-50" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-white px-4">
           <h1 className="text-4xl md:text-6xl font-bold text-center mb-4 animate-slideUp">
-            Welcome to <span className="text-yellow-300">Gym</span><span className="text-white">Wala</span>
+            Welcome to <span className="text-yellow-300">Gym</span>
+            <span className="text-white">Wala</span>
           </h1>
           <p className="text-xl md:text-2xl text-center mb-8 max-w-2xl animate-slideUp delay-200">
             Transform your body, mind, and life with our world-class facilities.
@@ -124,7 +125,7 @@ const HomeHero = () => {
         <img
           src="https://images.pexels.com/photos/841131/pexels-photo-841131.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
           alt="Gym Facility"
-          className="w-full max-w-4xl mx-auto rounded-lg shadow-lg"
+          className="w-full max-w-4xl mx-auto rounded-lg shadow-lg hover:scale-105 transition-all duration-300 ease-out"
         />
       </Section>
 
@@ -157,7 +158,7 @@ const HomeHero = () => {
               <img
                 src={trainer.img}
                 alt={trainer.name}
-                className="w-48 h-48 rounded-full mb-4 object-cover"
+                className="w-48 h-48 rounded-full mb-4 object-cover hover:scale-105 transition-all duration-300 ease-out"
               />
               <h3 className="text-xl font-semibold">{trainer.name}</h3>
               <p className="text-gray-400">{trainer.role}</p>
@@ -195,7 +196,7 @@ const HomeHero = () => {
               icon: <FaHeartbeat className="text-yellow-300 text-3xl mb-2" />,
             },
           ].map((achievement) => (
-            <div key={achievement.label} className="flex flex-col items-center">
+            <div key={achievement.label} className="flex flex-col items-center hover:scale-105 transition-all duration-300 ease-out">
               {achievement.icon}
               <span className="text-4xl font-bold text-yellow-300">
                 {achievement.number}
@@ -230,7 +231,7 @@ const HomeHero = () => {
               <img
                 src={reason.img}
                 alt={reason.title}
-                className="w-full h-64 object-cover rounded-lg mb-4"
+                className="w-full h-64 object-cover rounded-lg mb-4 hover:scale-105 transition-all duration-300 ease-out"
               />
               <h3 className="text-xl font-semibold mb-2">{reason.title}</h3>
               <p className="text-gray-400">{reason.desc}</p>
@@ -295,8 +296,8 @@ const HomeHero = () => {
             <img
               src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
               alt="Join GymWala"
-              className="w-full h-96 object-cover rounded-lg shadow-lg"
-            />
+              className="w-full h-96 object-cover rounded-lg shadow-lg hover:scale-105 transition-all duration-300 ease-out"
+            /> 
           </div>
         </div>
       </Section>
@@ -308,7 +309,7 @@ const HomeHero = () => {
         icon={<FaMapMarkerAlt className="text-yellow-300 text-4xl mr-2" />}
         bg="bg-gray-900"
       >
-        <div className="flex flex-col md:flex-row gap-8 items-center">
+        <div className="flex flex-col md:flex-row gap-8 items-top ">
           <div className="w-full md:w-1/2">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509372!2d144.9537353153167!3d-37.81627927975195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d1c4b1b1c4b!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sus!4v1635781234567!5m2!1sen!2sus"
@@ -326,13 +327,13 @@ const HomeHero = () => {
               <div className="flex items-center">
                 <FaMapMarkerAlt className="text-yellow-300 text-2xl mr-3" />
                 <p>
-                  GymWala Fitness Center, 123 Fitness Street, Melbourne, VIC
-                  3000, Australia
+                  GymWala Fitness Center, 123 Fitness Street, <br /> Pune, Maharashtra,
+                  India - 411043
                 </p>
               </div>
               <div className="flex items-center">
                 <FaPhone className="text-yellow-300 text-2xl mr-3" />
-                <p>+61 3 1234 5678</p>
+                <p>+91 1234567890</p>
               </div>
               <div className="flex items-center">
                 <FaEnvelope className="text-yellow-300 text-2xl mr-3" />

@@ -67,7 +67,7 @@ const Workouts = () => {
                   <img
                     src={plan.image}
                     alt={plan.title}
-                    className="w-full h-80 object-cover rounded-lg shadow-lg"
+                    className="w-full h-80 object-cover rounded-lg shadow-lg hover:scale-95 transition-all duration-300 ease-out"
                   />
                 </div>
                 {/* Content */}

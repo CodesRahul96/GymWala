@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { Link } from 'react-scroll';
-import { FaBars, FaTimes } from 'react-icons/fa';
-import JoinNowModal from './JoinNowModal';
+import { useState, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { Link } from "react-scroll";
+import { FaBars, FaTimes } from "react-icons/fa";
+import JoinNowModal from "./JoinNowModal";
 import Logo from "../assets/GymWala.png";
 
 const Navbar = () => {
@@ -11,17 +11,17 @@ const Navbar = () => {
   const location = useLocation();
 
   const navItems = [
-    { name: 'Home', href: '/', scrollTo: 'hero' },
-    { name: 'Workouts', href: '/workouts' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'Trainers', href: '/trainers' },
-    { name: 'Contact', href: '/contact' },
+    { name: "Home", href: "/" },
+    { name: "Workouts", href: "/workouts" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "Trainers", href: "/trainers" },
+    { name: "Contact", href: "/contact" },
   ];
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
-  const isHomePage = location.pathname === '/';
+  const isHomePage = location.pathname === "/";
 
   // Trigger animation on page load
   const [animate, setAnimate] = useState(false);
@@ -32,21 +32,27 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`bg-gray-900 text-white fixed w-full z-20 top-0 shadow-lg ${animate ? 'animate-slideUp' : 'opacity-0'}`}>
+      <nav
+        className={`bg-gray-900 text-white fixed w-full z-20 top-0 shadow-lg ${
+          animate ? "animate-slideUp" : "opacity-0"
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            
             <div className="flex-shrink-0">
-              <NavLink to="/" className="text-2xl font-extrabold tracking-tight animate-fadeIn flex text-center items-center justify-center">
-              <img src={Logo} className='w-[50px]' alt="Logo" />
-              <span className="text-yellow-300 animate-pulse">Gym</span>
+              <NavLink
+                to="/"
+                className="text-2xl font-extrabold tracking-tight animate-fadeIn flex text-center items-center justify-center"
+              >
+                <img src={Logo} className="w-[50px]" alt="Logo" />
+                <span className="text-yellow-300 animate-pulse">Gym</span>
                 <span className="text-white">Wala</span>
               </NavLink>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-4">
-              {navItems.map((item) => (
+              {navItems.map((item) =>
                 item.scrollTo && isHomePage ? (
                   <Link
                     key={item.name}
@@ -55,7 +61,9 @@ const Navbar = () => {
                     duration={500}
                     className={({ isActive }) =>
                       `relative px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
-                        isActive || location.pathname === item.href ? 'text-yellow-300' : 'text-white hover:text-yellow-300'
+                        isActive || location.pathname === item.href
+                          ? "text-yellow-300"
+                          : "text-white hover:text-yellow-300"
                       } cursor-pointer`
                     }
                     activeClass="text-yellow-300"
@@ -70,7 +78,9 @@ const Navbar = () => {
                     to={item.href}
                     className={({ isActive }) =>
                       `relative px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
-                        isActive ? 'text-yellow-300' : 'text-white hover:text-yellow-300'
+                        isActive
+                          ? "text-yellow-300"
+                          : "text-white hover:text-yellow-300"
                       }`
                     }
                   >
@@ -78,7 +88,7 @@ const Navbar = () => {
                     <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
                   </NavLink>
                 )
-              ))}
+              )}
               {/* Join Now Button */}
               <button
                 onClick={toggleModal}
@@ -102,11 +112,11 @@ const Navbar = () => {
           {/* Mobile Menu */}
           <div
             className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
-              isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+              isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
             }`}
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navItems.map((item) => (
+              {navItems.map((item) =>
                 item.scrollTo && isHomePage ? (
                   <Link
                     key={item.name}
@@ -116,7 +126,9 @@ const Navbar = () => {
                     onClick={toggleMenu}
                     className={({ isActive }) =>
                       `block px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ${
-                        isActive || location.pathname === item.href ? 'text-yellow-300' : 'text-white hover:text-yellow-300 hover:bg-gray-800'
+                        isActive || location.pathname === item.href
+                          ? "text-yellow-300"
+                          : "text-white hover:text-yellow-300 hover:bg-gray-800"
                       } animate-fadeIn delay-100`
                     }
                     activeClass="text-yellow-300"
@@ -131,14 +143,16 @@ const Navbar = () => {
                     onClick={toggleMenu}
                     className={({ isActive }) =>
                       `block px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ${
-                        isActive ? 'text-yellow-300' : 'text-white hover:text-yellow-300 hover:bg-gray-800'
+                        isActive
+                          ? "text-yellow-300"
+                          : "text-white hover:text-yellow-300 hover:bg-gray-800"
                       } animate-fadeIn delay-100`
                     }
                   >
                     {item.name}
                   </NavLink>
                 )
-              ))}
+              )}
               {/* Join Now Button in Mobile Menu */}
               <button
                 onClick={() => {
