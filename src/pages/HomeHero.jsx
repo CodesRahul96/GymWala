@@ -92,7 +92,7 @@ const HomeHero = () => {
             to="join"
             smooth={true}
             duration={500}
-            className="px-8 py-3 bg-yellow-400 text-gray-900 rounded-md font-semibold text-lg hover:bg-yellow-300 animate-bounceIn delay-400 cursor-pointer"
+            className="px-8 py-3 bg-yellow-400 text-gray-900 rounded-full font-semibold text-lg hover:bg-yellow-300 animate-bounceIn delay-400 cursor-pointer"
           >
             Join Now
           </Link>
