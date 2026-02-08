@@ -50,12 +50,14 @@ const Navbar = () => {
     <>
       <nav
         className={`fixed w-full z-50 transition-all duration-500 ${
-          isScrolled 
+          isScrolled && !isOpen
             ? "py-3 bg-obsidian/95 backdrop-blur-xl border-b border-primary/20 shadow-[0_10px_40px_rgba(0,0,0,0.5)]" 
-            : "py-5 bg-transparent"
+            : isOpen 
+              ? "py-3 bg-obsidian"
+              : "py-5 bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-50">
           <div className="flex items-center justify-between h-16">
             <div className="flex-shrink-0">
               <NavLink
@@ -112,9 +114,8 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu Overlay */}
         <div
-          className={`fixed inset-0 bg-obsidian z-[-1] transition-all duration-700 ease-in-out transform ${
+          className={`fixed inset-0 bg-obsidian z-40 transition-all duration-700 ease-in-out transform ${
             isOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
           } md:hidden flex flex-col items-center justify-center p-8 space-y-8`}
         >
