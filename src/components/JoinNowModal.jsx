@@ -25,13 +25,18 @@ const JoinNowModal = ({ isOpen, onClose }) => {
       {/* Modal Card */}
       <div className="relative w-full max-w-lg glass-dark p-8 md:p-12 rounded-[40px] border border-white/10 shadow-2xl animate-scaleUp overflow-hidden">
         {/* Glow Background Accent */}
-        <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 blur-[100px] rounded-full" />
+        <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 blur-[100px] rounded-full pointer-events-none" />
         
         <button
-          onClick={onClose}
-          className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-primary hover:text-obsidian hover:scale-110 transition-all duration-300 z-10"
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
+          className="absolute top-4 right-4 md:top-6 md:right-6 w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-primary hover:text-obsidian hover:scale-110 transition-all duration-300 z-[60] cursor-pointer"
+          aria-label="Close modal"
         >
-          <FaTimes size={18} />
+          <FaTimes size={20} />
         </button>
 
         <div className="relative z-10">
