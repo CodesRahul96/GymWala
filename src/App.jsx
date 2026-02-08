@@ -9,6 +9,7 @@ import Trainers from './pages/Trainers';
 import Contact from './pages/Contact';
 import Preloader from './components/Preloader';
 import PageNotFound from './pages/PageNotFound';
+import About from './pages/About';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/workouts" element={<Workouts />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="/trainers" element={<Trainers />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="*" element={<PageNotFound />} />
               </Routes>

@@ -8,6 +8,7 @@ import Logo from "../assets/GymWala.png";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
   const navItems = [
@@ -15,26 +16,43 @@ const Navbar = () => {
     { name: "Workouts", href: "/workouts" },
     { name: "Pricing", href: "/pricing" },
     { name: "Trainers", href: "/trainers" },
+    { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+    if (!isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  };
+
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const isHomePage = location.pathname === "/";
 
-  // Trigger animation on page load
-  const [animate, setAnimate] = useState(false);
   useEffect(() => {
-    setAnimate(false); // Reset animation
-    setTimeout(() => setAnimate(true), 10); // Trigger animation after a slight delay
-  }, [location.pathname]); // Re-run on route change
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
+    document.body.style.overflow = 'unset';
+  }, [location.pathname]);
 
   return (
     <>
       <nav
-        className={`bg-gray-900 text-white fixed w-full z-20 top-0 shadow-lg ${
-          animate ? "animate-slideUp" : "opacity-0"
+        className={`fixed w-full z-50 transition-all duration-500 ${
+          isScrolled 
+            ? "py-3 bg-obsidian/95 backdrop-blur-xl border-b border-primary/20 shadow-[0_10px_40px_rgba(0,0,0,0.5)]" 
+            : "py-5 bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,59 +60,41 @@ const Navbar = () => {
             <div className="flex-shrink-0">
               <NavLink
                 to="/"
-                className="text-2xl font-extrabold tracking-tight animate-fadeIn flex text-center items-center justify-center"
+                className="text-2xl font-black tracking-tighter flex items-center group"
               >
-                <img src={Logo} className="w-[50px]" alt="Logo" />
-                <span className="text-yellow-300 animate-pulse">Gym</span>
-                <span className="text-white">Wala</span>
+                <img src={Logo} className="w-[50px] transition-transform duration-500 group-hover:scale-110" alt="Logo" />
+                <div className="ml-2 flex flex-col leading-none -space-y-1">
+                  <span className="text-primary text-xl uppercase italic">Gym</span>
+                  <span className="text-white text-lg font-bold tracking-widest uppercase">Wala</span>
+                </div>
               </NavLink>
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-4">
-              {navItems.map((item) =>
-                item.scrollTo && isHomePage ? (
-                  <Link
-                    key={item.name}
-                    to={item.scrollTo}
-                    smooth={true}
-                    duration={500}
-                    className={({ isActive }) =>
-                      `relative px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
-                        isActive || location.pathname === item.href
-                          ? "text-yellow-300"
-                          : "text-white hover:text-yellow-300"
-                      } cursor-pointer`
-                    }
-                    activeClass="text-yellow-300"
-                    spy={true}
-                  >
-                    {item.name}
-                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                ) : (
+            <div className="hidden md:flex items-center space-x-2">
+              <div className="flex items-center bg-white/5 rounded-full px-2 py-1 border border-white/5">
+                {navItems.map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.href}
                     className={({ isActive }) =>
-                      `relative px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
+                      `px-5 py-2 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 ${
                         isActive
-                          ? "text-yellow-300"
-                          : "text-white hover:text-yellow-300"
+                          ? "bg-primary text-obsidian shadow-[0_0_20px_rgba(204,255,0,0.4)]"
+                          : "text-white/70 hover:text-white"
                       }`
                     }
                   >
                     {item.name}
-                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
                   </NavLink>
-                )
-              )}
-              {/* Join Now Button */}
+                ))}
+              </div>
+              
               <button
                 onClick={toggleModal}
-                className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md font-semibold text-sm hover:bg-yellow-300 transition-all duration-300 animate-bounceIn"
+                className="ml-4 px-7 py-2.5 bg-primary text-obsidian rounded-full font-black text-sm uppercase tracking-widest hover:bg-primary-dark hover:scale-105 transition-all duration-300 shadow-[0_4px_15px_rgba(204,255,0,0.2)]"
               >
-                Join Now
+                Join
               </button>
             </div>
 
@@ -102,69 +102,48 @@ const Navbar = () => {
             <div className="md:hidden">
               <button
                 onClick={toggleMenu}
-                className="text-white hover:text-yellow-300 focus:outline-none animate-bounceIn"
+                className={`p-2.5 rounded-xl transition-all duration-300 border ${
+                  isOpen ? "bg-primary text-obsidian border-primary" : "text-white bg-white/5 border-white/10"
+                }`}
               >
-                {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+                {isOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
               </button>
             </div>
           </div>
+        </div>
 
-          {/* Mobile Menu */}
-          <div
-            className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
-              isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        {/* Mobile Menu Overlay */}
+        <div
+          className={`fixed inset-0 bg-obsidian z-[-1] transition-all duration-700 ease-in-out transform ${
+            isOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+          } md:hidden flex flex-col items-center justify-center p-8 space-y-8`}
+        >
+          {navItems.map((item, index) => (
+            <NavLink
+              key={item.name}
+              to={item.href}
+              className={({ isActive }) =>
+                `text-4xl font-black uppercase italic tracking-tighter transition-all duration-500 ${
+                isActive ? "text-primary scale-110 shadow-primary" : "text-white hover:text-primary-light"
+                } ${isOpen ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`
+              }
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
+              {item.name}
+            </NavLink>
+          ))}
+          <button
+            onClick={() => {
+              toggleMenu();
+              toggleModal();
+            }}
+            className={`px-12 py-4 bg-primary text-obsidian rounded-full font-black text-xl uppercase tracking-widest transition-all duration-700 ${
+              isOpen ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
+            style={{ transitionDelay: `${navItems.length * 100}ms` }}
           >
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navItems.map((item) =>
-                item.scrollTo && isHomePage ? (
-                  <Link
-                    key={item.name}
-                    to={item.scrollTo}
-                    smooth={true}
-                    duration={500}
-                    onClick={toggleMenu}
-                    className={({ isActive }) =>
-                      `block px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ${
-                        isActive || location.pathname === item.href
-                          ? "text-yellow-300"
-                          : "text-white hover:text-yellow-300 hover:bg-gray-800"
-                      } animate-fadeIn delay-100`
-                    }
-                    activeClass="text-yellow-300"
-                    spy={true}
-                  >
-                    {item.name}
-                  </Link>
-                ) : (
-                  <NavLink
-                    key={item.name}
-                    to={item.href}
-                    onClick={toggleMenu}
-                    className={({ isActive }) =>
-                      `block px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ${
-                        isActive
-                          ? "text-yellow-300"
-                          : "text-white hover:text-yellow-300 hover:bg-gray-800"
-                      } animate-fadeIn delay-100`
-                    }
-                  >
-                    {item.name}
-                  </NavLink>
-                )
-              )}
-              {/* Join Now Button in Mobile Menu */}
-              <button
-                onClick={() => {
-                  toggleMenu();
-                  toggleModal();
-                }}
-                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium bg-yellow-400 text-gray-900 hover:bg-yellow-300 transition-all duration-300 animate-fadeIn delay-100"
-              >
-                Join Now
-              </button>
-            </div>
-          </div>
+            Join Now
+          </button>
         </div>
       </nav>
 
@@ -175,3 +154,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

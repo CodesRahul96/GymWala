@@ -8,19 +8,17 @@ import {
   FaUsers,
   FaMapMarkerAlt,
   FaHeartbeat,
+  FaChevronRight,
 } from "react-icons/fa";
 import { Link } from "react-scroll";
+import { NavLink } from "react-router-dom";
 
 const sliderImages = [
-  "https://images.pexels.com/photos/163351/girl-boxer-ring-boxing-pear-163351.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  "https://images.pexels.com/photos/416754/pexels-photo-416754.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  "https://images.unsplash.com/photo-1593079831268-3381b0db4a77?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-  "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-  "https://images.unsplash.com/photo-1576678927484-cc907957088c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-  "https://images.pexels.com/photos/136404/pexels-photo-136404.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+  "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+  "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
 ];
 
-// Custom hook for scroll animation
 const useOnScreen = (options) => {
   const [ref, setRef] = useState(null);
   const [visible, setVisible] = useState(false);
@@ -47,327 +45,238 @@ const HomeHero = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(timer);
   }, []);
 
-  const goToSlide = (index) => setCurrentSlide(index);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    // Final Audit: Removed console.log
     setFormData({ name: "", email: "", phone: "" });
   };
 
   return (
-    <div className="bg-gray-800 text-white">
+    <div className="bg-obsidian text-white overflow-x-hidden">
       {/* Hero Slider */}
-      <section
-        className="relative h-screen w-full overflow-hidden animate-fadeIn"
-        id="hero"
-      >
+      <section className="relative h-screen w-full overflow-hidden" id="home">
         {sliderImages.map((image, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              currentSlide === index ? "opacity-100" : "opacity-0"
+            className={`absolute inset-0 transition-all duration-1000 ease-in-out transform ${
+              currentSlide === index ? "opacity-100 scale-105" : "opacity-0 scale-100"
             }`}
             style={{
               backgroundImage: `url(${image})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-          />
-        ))}
-        <div className="absolute inset-0 bg-gray-900 bg-opacity-50" />
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-white px-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-center mb-4 animate-slideUp">
-            Welcome to <span className="text-yellow-300">Gym</span>
-            <span className="text-white">Wala</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-center mb-8 max-w-2xl animate-slideUp delay-200">
-            Transform your body, mind, and life with our world-class facilities.
-          </p>
-          <Link
-            to="join"
-            smooth={true}
-            duration={500}
-            className="px-8 py-3 bg-yellow-400 text-gray-900 rounded-full font-semibold text-lg hover:bg-yellow-300 animate-bounceIn delay-400 cursor-pointer"
           >
-            Join Now
-          </Link>
+            <div className="absolute inset-0 bg-gradient-to-b from-obsidian/40 via-obsidian/60 to-obsidian" />
+          </div>
+        ))}
+
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 max-w-5xl mx-auto pt-24 md:pt-32">
+          {/* Decorative Floating Elements */}
+          <div className="absolute top-1/4 -left-20 w-64 h-64 bg-primary/5 blur-[100px] rounded-full animate-float" />
+          <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-primary/10 blur-[120px] rounded-full animate-float delay-1000" />
+
+          <div className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-primary text-xs font-bold uppercase tracking-widest mb-6 animate-fadeIn">
+            Elevate Your Peak Performance
+          </div>
+          <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter mb-6 leading-[0.9] animate-slideUp">
+            FEEL THE <span className="text-gradient">POWER</span> <br />
+            OF STRENGTH
+          </h1>
+          <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl font-light leading-relaxed animate-slideUp delay-200">
+            Unleash your inner warrior with elite coaching and a high-performance 
+            environment designed for those who refuse to settle.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 animate-slideUp delay-300">
+            <Link
+              to="join"
+              smooth={true}
+              duration={500}
+              className="px-10 py-4 bg-primary text-obsidian rounded-full font-black uppercase tracking-widest hover:bg-primary-dark transition-all duration-500 shadow-[0_10px_40px_rgba(204,255,0,0.3)] hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center group"
+            >
+              Start Free Trial <FaChevronRight className="ml-2 text-xs transition-transform group-hover:translate-x-1" />
+            </Link>
+            <NavLink
+              to="/workouts"
+              className="px-10 py-4 bg-white/5 border border-white/10 text-white rounded-full font-black uppercase tracking-widest hover:bg-white/10 transition-all duration-300 cursor-pointer flex items-center justify-center"
+            >
+              Explore Plans
+            </NavLink>
+          </div>
         </div>
-        <div className="absolute bottom-6 left-0 right-0 z-10 flex justify-center space-x-2">
+
+        {/* Slide Indicators */}
+        <div className="absolute bottom-10 left-0 right-0 z-20 flex justify-center space-x-3">
           {sliderImages.map((_, index) => (
             <button
               key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                currentSlide === index
-                  ? "bg-yellow-400 scale-125"
-                  : "bg-gray-400 hover:bg-gray-300"
+              onClick={() => setCurrentSlide(index)}
+              className={`h-1.5 transition-all duration-500 rounded-full ${
+                currentSlide === index ? "w-12 bg-primary" : "w-6 bg-white/20 hover:bg-white/40"
               }`}
             />
           ))}
         </div>
       </section>
 
-      {/* GymWala Info */}
-      <Section
-        id="about"
-        title="About GymWala"
-        icon={<FaDumbbell className="text-yellow-300 text-4xl mr-2" />}
-      >
-        <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-8">
-          GymWala is more than just a gym - it&apos;s a community dedicated to
-          fitness and wellness.
-        </p>
-        <img
-          src="https://images.pexels.com/photos/841131/pexels-photo-841131.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt="Gym Facility"
-          className="w-full max-w-4xl mx-auto rounded-lg shadow-lg hover:scale-105 transition-all duration-300 ease-out"
-        />
-      </Section>
-
-      {/* Trainers */}
-      <Section
-        id="trainers"
-        title="Our Trainers"
-        icon={<FaUsers className="text-yellow-300 text-4xl mr-2" />}
-        bg="bg-gray-900"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* Stats Section */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
           {[
-            {
-              name: "John Doe",
-              role: "Strength Coach",
-              img: "https://images.pexels.com/photos/5327471/pexels-photo-5327471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-            },
-            {
-              name: "Jane Smith",
-              role: "Yoga Instructor",
-              img: "https://images.pexels.com/photos/3757370/pexels-photo-3757370.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-            },
-            {
-              name: "Mike Johnson",
-              role: "Cardio Expert",
-              img: "https://images.pexels.com/photos/17939430/pexels-photo-17939430/free-photo-of-man-in-tank-top-at-gym.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-            },
-          ].map((trainer) => (
-            <div key={trainer.name} className="flex flex-col items-center">
-              <img
-                src={trainer.img}
-                alt={trainer.name}
-                className="w-48 h-48 rounded-full mb-4 object-cover hover:scale-105 transition-all duration-300 ease-out"
-              />
-              <h3 className="text-xl font-semibold">{trainer.name}</h3>
-              <p className="text-gray-400">{trainer.role}</p>
+            { num: "1200+", label: "Elite Members", icon: <FaUsers /> },
+            { num: "50+", label: "Pro Trainers", icon: <FaUser /> },
+            { num: "100+", label: "Elite Programs", icon: <FaDumbbell /> },
+            { num: "15+", label: "Regional Awards", icon: <FaTrophy /> },
+          ].map((stat, idx) => (
+            <div key={idx} className="text-center group p-6 rounded-3xl bg-white/5 border border-white/5 hover:border-primary/30 transition-all duration-500">
+              <div className="text-primary text-3xl mb-4 flex justify-center group-hover:scale-110 transition-transform">
+                {stat.icon}
+              </div>
+              <div className="text-4xl font-black mb-1">{stat.num}</div>
+              <div className="text-gray-500 text-sm uppercase tracking-widest">{stat.label}</div>
             </div>
           ))}
         </div>
-      </Section>
+      </section>
 
-      {/* Achievements */}
-      <Section
-        id="achievements"
-        title="Our Achievements"
-        icon={<FaTrophy className="text-yellow-300 text-4xl mr-2" />}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {[
-            {
-              number: "1200+",
-              label: "Happy Members",
-              icon: <FaUsers className="text-yellow-300 text-3xl mb-2" />,
-            },
-            {
-              number: "100+",
-              label: "Fitness Programs",
-              icon: <FaDumbbell className="text-yellow-300 text-3xl mb-2" />,
-            },
-            {
-              number: "15+",
-              label: "Expert Trainers",
-              icon: <FaUser className="text-yellow-300 text-3xl mb-2" />,
-            },
-            {
-              number: "10+",
-              label: "Years Experience",
-              icon: <FaHeartbeat className="text-yellow-300 text-3xl mb-2" />,
-            },
-          ].map((achievement) => (
-            <div key={achievement.label} className="flex flex-col items-center hover:scale-105 transition-all duration-300 ease-out inset-0 bg-gray-900 bg-opacity-60 p-5 rounded-full">
-              {achievement.icon}
-              <span className="text-4xl font-bold text-yellow-300">
-                {achievement.number}
-              </span>
-              <span className="text-gray-300">{achievement.label}</span>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Why Choose GymWala */}
-      <Section
-        id="why-choose"
-        title="Why Choose GymWala"
-        icon={<FaHeartbeat className="text-yellow-300 text-4xl mr-2" />}
-        bg="bg-gray-900"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {[
-            {
-              title: "Modern Equipment",
-              desc: "State-of-the-art fitness gear",
-              img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-            },
-            {
-              title: "Expert Guidance",
-              desc: "Certified trainers",
-              img: "https://images.pexels.com/photos/703012/pexels-photo-703012.jpeg?auto=compress&cs=tinysrgb&w=600",
-            },
-          ].map((reason) => (
-            <div key={reason.title} className="flex flex-col items-center">
-              <img
-                src={reason.img}
-                alt={reason.title}
-                className="w-full h-64 object-cover rounded-lg mb-4 hover:scale-105 transition-all duration-300 ease-out"
-              />
-              <h3 className="text-xl font-semibold mb-2">{reason.title}</h3>
-              <p className="text-gray-400">{reason.desc}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Join Form */}
-      <Section id="join" title="Join GymWala Today">
-        <div className="flex flex-col md:flex-row gap-8 items-center">
-          <div className="w-full md:w-1/2">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="relative">
-                <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="w-full pl-10 p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-yellow-400"
-                />
-              </div>
-              <div className="relative">
-                <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="w-full pl-10 p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-yellow-400"
-                />
-              </div>
-              <div className="relative">
-                <FaPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  value={formData.phone}
-                  onChange={(e) =>
-                    setFormData({ ...formData, phone: e.target.value })
-                  }
-                  className="w-full pl-10 p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-yellow-400"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full py-3 bg-yellow-400 text-gray-900 rounded-md font-semibold hover:bg-yellow-300"
-              >
-                Submit
-              </button>
-            </form>
-            <p className="text-center text-yellow-300 mt-4 font-semibold">
-              Get 1 Day Free Trial Now!
-            </p>
-          </div>
-          <div className="w-full md:w-1/2">
+      {/* About Section */}
+      <section id="about" className="py-24 bg-obsidian-surface relative">
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="relative group">
+            <div className="absolute -inset-4 bg-primary/20 rounded-3xl blur-2xl group-hover:bg-primary/30 transition-all duration-500" />
             <img
-              src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-              alt="Join GymWala"
-              className="w-full h-96 object-cover rounded-lg shadow-lg hover:scale-105 transition-all duration-300 ease-out"
-            /> 
-          </div>
-        </div>
-      </Section>
-
-      {/* Visit GymWala */}
-      <Section
-        id="visit"
-        title="Visit GymWala"
-        icon={<FaMapMarkerAlt className="text-yellow-300 text-4xl mr-2" />}
-        bg="bg-gray-900"
-      >
-        <div className="flex flex-col md:flex-row gap-8 items-top ">
-          <div className="w-full md:w-1/2">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1083.5912749774066!2d73.8544322942217!3d18.463534172952826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1743669345038!5m2!1sen!2sin"
-              width="100%"
-              height="400"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              className="rounded-lg"
+              src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+              alt="Gym Interior"
+              className="relative rounded-3xl object-cover h-[500px] w-full shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]"
             />
           </div>
-          <div className="w-full md:w-1/2 text-left">
-            <h2 className="text-3xl font-bold mb-8">Our Address</h2>
-            <div className="space-y-6">
-              <div className="flex items-center">
-                <FaMapMarkerAlt className="text-yellow-300 text-2xl mr-3" />
-                <p>
-                  GymWala Fitness Center, 123 Fitness Street, <br /> Pune, Maharashtra,
-                  India - 411043
-                </p>
-              </div>
-              <div className="flex items-center">
-                <FaPhone className="text-yellow-300 text-2xl mr-3" />
-                <p>+91 1234567890</p>
-              </div>
-              <div className="flex items-center">
-                <FaEnvelope className="text-yellow-300 text-2xl mr-3" />
-                <p>info@gymwala.com</p>
+          <div>
+            <div className="text-primary font-bold uppercase tracking-widest mb-4">Our Legacy</div>
+            <h2 className="text-4xl md:text-5xl font-black mb-6 italic leading-tight uppercase">
+              REDEFINE YOUR <span className="text-primary italic">LIMITS</span>
+            </h2>
+            <p className="text-gray-400 text-lg mb-8 leading-relaxed">
+              At GymWala, we believe strength is more than muscle. It's a mindset. Our facility is engineered 
+              for performance, equipped with Olympic-grade gear, and driven by a community that 
+              knows the value of grit.
+            </p>
+            <div className="space-y-4">
+              {["24/7 Access for VIP Members", "Olympic Lifting Platforms", "Digital Performance Tracking", "Recovery Ion-Bath & Sauna"].map((item, i) => (
+                <div key={i} className="flex items-center text-white/80">
+                  <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center mr-4">
+                    <div className="w-2 h-2 rounded-full bg-primary" />
+                  </div>
+                  <span className="font-medium tracking-wide">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Join Form */}
+      <section id="join" className="py-32 relative">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="glass-dark p-8 md:p-16 rounded-[40px] flex flex-col md:flex-row gap-16 items-center border border-white/10 shadow-3xl">
+            <div className="w-full md:w-1/2">
+              <h2 className="text-5xl font-black mb-4 italic uppercase tracking-tighter">
+                READY TO <span className="text-primary">START?</span>
+              </h2>
+              <p className="text-gray-400 mb-10 text-lg">
+                Your transformation begins today. Sign up for a free coaching session and a 3-day full access pass.
+              </p>
+              
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="relative">
+                    <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" />
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:border-primary/50 outline-none transition-all placeholder:text-gray-600"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    />
+                  </div>
+                  <div className="relative">
+                    <FaPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" />
+                    <input
+                      type="tel"
+                      placeholder="Phone"
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:border-primary/50 outline-none transition-all placeholder:text-gray-600"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <div className="relative">
+                  <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40" />
+                  <input
+                    type="email"
+                    placeholder="Email Address"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:border-primary/50 outline-none transition-all placeholder:text-gray-600"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-primary text-obsidian py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-primary-dark transition-all duration-300 shadow-xl"
+                >
+                  Claim My Free Pass
+                </button>
+              </form>
+            </div>
+            
+            <div className="hidden md:block w-1/2 h-full">
+              <div className="relative group grayscale hover:grayscale-0 transition-all duration-1000">
+                <div className="absolute -inset-2 bg-gradient-to-tr from-primary to-transparent opacity-30 rounded-3xl" />
+                <img
+                  src="https://images.unsplash.com/photo-1576678927484-cc907957088c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                  alt="Athlete"
+                  className="rounded-3xl object-cover h-[450px] w-full"
+                />
               </div>
             </div>
           </div>
         </div>
-      </Section>
+      </section>
+
+      {/* Map Section */}
+      <section className="h-[500px] w-full relative">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1083.5912749774066!2d73.8544322942217!3d18.463534172952826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1743669345038!5m2!1sen!2sin"
+          width="100%"
+          height="100%"
+          style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }}
+          allowFullScreen=""
+          loading="lazy"
+        />
+        <div className="absolute bottom-10 right-10 glass p-8 rounded-3xl border border-white/10 max-w-sm hidden md:block">
+          <h3 className="text-xl font-black mb-4 uppercase">Visit The Den</h3>
+          <div className="space-y-4 text-gray-300">
+            <div className="flex items-center">
+              <FaMapMarkerAlt className="text-primary mr-3 text-lg" />
+              <span>123 Fitness Street, South Pune, IN</span>
+            </div>
+            <div className="flex items-center">
+              <FaPhone className="text-primary mr-3 text-lg" />
+              <span>+91 1800-GYM-WALA</span>
+            </div>
+            <div className="flex items-center">
+              <FaHeartbeat className="text-primary mr-3 text-lg" />
+              <span>Open 24/7 for Elite Members</span>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
 
-// Reusable Section Component with Scroll Animation
-// eslint-disable-next-line react/prop-types
-const Section = ({ id, title, icon, children, bg = "" }) => {
-  const [setRef, visible] = useOnScreen({ threshold: 0.1 });
-  return (
-    <section
-      ref={setRef}
-      id={id}
-      className={`${bg} py-16 px-4 ${
-        visible ? "animate-slideUp" : "opacity-0"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto text-center">
-        <div className="flex justify-center items-center mb-12">
-          {icon}
-          <h2 className="text-3xl md:text-4xl font-bold">{title}</h2>
-        </div>
-        {children}
-      </div>
-    </section>
-  );
-};
-
 export default HomeHero;
+

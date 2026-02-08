@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaDumbbell } from "react-icons/fa";
+import { FaDumbbell, FaCheckCircle, FaChevronRight } from "react-icons/fa";
 
 const useOnScreen = (options) => {
   const [ref, setRef] = useState(null);
@@ -23,116 +23,125 @@ const useOnScreen = (options) => {
 const Pricing = () => {
   const plans = [
     {
-      name: "Basic",
-      price: "₹999/month",
-      features: ["Gym Access", "Group Classes", "Locker Room"],
-      color: "yellow-400",
+      name: "Basic Strength",
+      price: "₹999",
+      period: "month",
+      features: ["24/7 Den Access", "Basic Equipment", "Locker & Shower", "Standard Support"],
+      highlight: false,
     },
     {
-      name: "Pro",
-      price: "₹1799/month",
+      name: "Pro Warrior",
+      price: "₹1799",
+      period: "month",
       features: [
-        "Gym Access",
-        "Group Classes",
-        "Personal Trainer (2 sessions)",
-        "Nutrition Guide",
+        "All Basic Features",
+        "Free Group Workshops",
+        "2 Coaching Sessions",
+        "Bio-Nutrient Plan",
       ],
-      color: "yellow-500",
+      highlight: true,
     },
     {
-      name: "Elite",
-      price: "₹2999/month",
+      name: "Elite King",
+      price: "₹2999",
+      period: "month",
       features: [
-        "Unlimited Gym Access",
-        "All Classes",
-        "Personal Trainer (5 sessions)",
-        "Nutrition Guide",
-        "Sauna",
+        "All Pro Features",
+        "Unlimited Masterclasses",
+        "5 Coaching Sessions",
+        "Sauna & Recovery Lounge",
+        "VIP Keyfob Access",
       ],
-      color: "yellow-600",
+      highlight: false,
     },
   ];
 
   const [setHeroRef, heroVisible] = useOnScreen({ threshold: 0.1 });
-  const [setPlansRef, plansVisible] = useOnScreen({ threshold: 0.1 });
 
   return (
-    <div className="bg-gray-800 text-white min-h-screen">
+    <div className="bg-obsidian text-white min-h-screen pt-24 md:pt-32">
+      {/* Hero Section */}
       <section
         ref={setHeroRef}
-        className={`relative h-96 w-full overflow-hidden ${
-          heroVisible ? "animate-fadeIn" : "opacity-0"
-        }`}
+        className="relative py-24 px-4 overflow-hidden"
       >
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="absolute inset-0 bg-gray-900 bg-opacity-60" />
-        <div className="relative z-10 h-full flex flex-col items-center justify-center px-4">
-          <div className="flex items-center mb-4">
-            <FaDumbbell className="text-yellow-300 text-5xl mr-3 animate-spinSlow" />
-            <h1 className="text-4xl md:text-5xl font-bold text-center animate-slideUp">
-              Pricing Plans
-            </h1>
+        <div className="absolute inset-x-0 top-0 h-96 bg-primary/5 blur-3xl rounded-full -translate-y-1/2" />
+        <div className="max-w-7xl mx-auto relative z-10 text-center">
+          <div className="inline-flex items-center space-x-2 px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-primary text-xs font-bold uppercase tracking-widest mb-8">
+            <FaDumbbell /> <span>Investment In Self</span>
           </div>
-          <p className="text-xl text-center max-w-2xl animate-slideUp delay-200">
-            Choose a plan that fits your fitness journey.
+          <h1 className="text-5xl md:text-7xl font-black italic tracking-tighter uppercase mb-6 drop-shadow-2xl">
+            PRICING <span className="text-gradient">TIERS</span>
+          </h1>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+            Transparent pricing for non-negotiable results. 
+            Choose the level of commitment that matches your ambition.
           </p>
         </div>
       </section>
 
-      <section
-        ref={setPlansRef}
-        className={`py-16 px-4 ${
-          plansVisible ? "animate-slideUp" : "opacity-0"
-        }`}
-      >
+      {/* Pricing Plans Section */}
+      <section className="py-24 px-4 bg-obsidian-surface relative">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Our Membership Plans
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {plans.map((plan) => (
               <div
                 key={plan.name}
-                className={`bg-gray-900 p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 ${
-                  plansVisible ? "animate-fadeIn" : "opacity-0"
+                className={`flex flex-col relative p-6 md:p-10 rounded-[40px] border transition-all duration-500 hover:scale-[1.02] ${
+                  plan.highlight 
+                    ? "bg-primary text-obsidian border-primary shadow-[0_20px_60px_rgba(204,255,0,0.2)] scale-100 md:scale-105 z-10 animate-border-pulse" 
+                    : "bg-obsidian-card text-white border-white/5 hover:border-white/10"
                 }`}
               >
-                <h3
-                  className={`text-2xl font-semibold text-${plan.color} mb-4`}
-                >
-                  {plan.name}
-                </h3>
-                <p className="text-3xl font-bold mb-6">{plan.price}</p>
-                <ul className="space-y-3 mb-6">
+                {plan.highlight && (
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-1.5 bg-obsidian text-primary rounded-full text-xs font-black uppercase tracking-widest border border-primary">
+                    Most Popular
+                  </div>
+                )}
+                
+                <div className="mb-10">
+                  <h3 className={`text-xl font-black uppercase italic tracking-tighter mb-4 ${plan.highlight ? "text-obsidian" : "text-primary"}`}>
+                    {plan.name}
+                  </h3>
+                  <div className="flex items-baseline">
+                    <span className="text-5xl font-black">{plan.price}</span>
+                    <span className={`ml-2 text-sm font-bold uppercase tracking-widest ${plan.highlight ? "text-obsidian/60" : "text-gray-500"}`}>
+                      / {plan.period}
+                    </span>
+                  </div>
+                </div>
+
+                <ul className="space-y-4 mb-12 flex-grow">
                   {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center">
-                      <span
-                        className={`w-2 h-2 bg-${plan.color} rounded-full mr-2`}
-                      />
-                      <span>{feature}</span>
+                    <li key={feature} className="flex items-center text-sm font-bold tracking-tight">
+                      <FaCheckCircle className={`mr-3 flex-shrink-0 ${plan.highlight ? "text-obsidian/80" : "text-primary"}`} />
+                      <span className={plan.highlight ? "text-obsidian/90" : "text-gray-300"}>{feature}</span>
                     </li>
                   ))}
                 </ul>
+
                 <button
-                  className={`w-full py-3 bg-${
-                    plan.color
-                  } text-gray-900 rounded-md font-semibold hover:bg-${plan.color.replace(
-                    "400",
-                    "300"
-                  )} transition-colors`}
+                  className={`w-full py-5 rounded-2xl font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center group ${
+                    plan.highlight 
+                      ? "bg-obsidian text-white hover:bg-black" 
+                      : "bg-primary text-obsidian hover:bg-primary-dark shadow-[0_10px_30px_rgba(204,255,0,0.15)]"
+                  }`}
                 >
-                  Join Now
+                  Get Started <FaChevronRight className="ml-2 text-xs transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Guarantee Section */}
+      <section className="py-24 px-4 text-center">
+        <div className="max-w-2xl mx-auto glass p-10 rounded-[40px] border-white/10">
+          <p className="text-gray-400 font-light italic text-lg">
+            "All plans come with a 7-day money-back guarantee. If you don't feel the power after 
+            the first week, we'll refund your investment. No questions, just respect."
+          </p>
         </div>
       </section>
     </div>
@@ -140,3 +149,4 @@ const Pricing = () => {
 };
 
 export default Pricing;
+
